@@ -388,7 +388,7 @@ useEffect(() => {
     settokenid(tokenIdd); // Assuming setid is your state setter function
   }
 
-  console.log(token, 'settokeniddsd'); // Log the current value of id
+   // Log the current value of id
 
 }, []);
 return (<div>
@@ -396,7 +396,7 @@ return (<div>
     {!isPreviewing ? (
       <>
       {console.log(id,'testfo rid')}
-      {console.log(token, 'settokeniddsd')}
+      {console.log(token, 'settokedgfdgsdgsdgniddsd')}
       <div className="flex flex-col sm:flex-row justify-between border-2 p-1 bg-slate-300">
   <button
     onClick={handlePrevious}

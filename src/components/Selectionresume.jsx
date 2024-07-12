@@ -61,23 +61,23 @@ function Selectionresume() {
           return;
         }
   
-        const parsedData = JSON.parse(response.data.data[0].resume_parse_data);
-        console.log("Parsed Resume Data:", parsedData);
-  
-        localStorage.setItem('resumeData', JSON.stringify(parsedData.templateData));
-        saveResumeId(response.data.data[0].id);
-  
-        toast.success("File uploaded successfully");
-        setLoading(false);
-  
-        navigate(`/form?id=${response.data.data[0].id}`);
-      } catch (error) {
-        console.error("Upload error:", error);
-        toast.error("File upload failed");
-        setLoading(false);
-      }
-    };
+        const parsedData = JSON.parse(resumeData.resume_parse_data);
+      localStorage.setItem('resumeData', JSON.stringify(parsedData.templateData));
+      saveResumeId(resumeData.id);
+      localStorage.setItem('jobSeekerLoginToken', token);
+      savetoken(token);
 
+      toast.success("File uploaded successfully");
+      setLoading(false);
+      setFile(null); // Reset the file input
+      navigate(`/form?id=${resumeData.id}`);
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("File upload failed. Please try again.");
+      setLoading(false);
+    }
+  };
+  
     const handleClick = () => {
         navigate('/form');
     };
