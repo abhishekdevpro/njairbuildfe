@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/form" element={<Form />} />
             <Route path="/" element={<Selectionresume />} />
-            <Route path="/uploadresume/:token" element={<Uploadresume />} />
+            <Route path="/uploadresume" element={<Uploadresume />} />
           </Routes>
         </ResumeProvider>
       </div>
