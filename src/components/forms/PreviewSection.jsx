@@ -3,7 +3,7 @@ import axios from 'axios';
 import PdfDownloadButton from '../forms/PdfDownloadButton';
 import TemplateComponent from './templateComponent';
 import FunctionalityOfCV from './FunctionalityOfCV';
-
+import { Link, useNavigate } from "react-router-dom";
 const PreviewSection = ({
   cvRef,
   handlePrint,
@@ -19,7 +19,9 @@ const PreviewSection = ({
   setSelectedFont,
   boxBgColor,
   setBoxBgColor,
-  skillsfromapi
+  skillsfromapi,
+  id,
+  token
 }) => {
   const [textSize, setTextSize] = useState(2);
   const [sectionSpacing, setSectionSpacing] = useState(2);
@@ -31,7 +33,8 @@ console.log(skillsfromapi,'api')
   
   const resumeScore = async () => {
     try {
-      const token = localStorage.getItem('jobSeekerLoginToken'); // Retrieve the token from local storage
+      const cleanedToken = token.replace(/"/g, '').trim(); 
+    console.log('Cleaned Authorization Header:', cleanedToken); // Retrieve the token from local storage
       const requestBody = {
         keyword: "Rate this resume content in percentage ? and checklist of scope improvments in manner of content and informations",
         file_location: "/etc/ai_job_portal/jobseeker/resume_uploads/black-and-white-standard-professional-resume-1719321080.pdf"
@@ -43,7 +46,7 @@ console.log(skillsfromapi,'api')
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': token // Include 'Bearer ' prefix if using Bearer token
+            'Authorization': cleanedToken // Include 'Bearer ' prefix if using Bearer token
           }
         }
       );
@@ -56,9 +59,9 @@ console.log(skillsfromapi,'api')
     }
   };
 
-  const updateResume = async (id) => {
-    const token = localStorage.getItem('token');
-    const url = `https://api.abroadium.com/api/jobseeker/resume-update/${id}`;
+  const updateResume = async () => {
+   
+    const url = `https://api.novajobs.us/api/resumebuild/resume-update/${id}`;
   
     // Ensure skillsfromapi is initialized as an empty array if it's null or undefined
     const skillsFromApiArray = Array.isArray(skillsfromapi) ? skillsfromapi : [];
@@ -117,28 +120,38 @@ console.log(skillsfromapi,'api')
   
     console.log('Payload:', JSON.stringify(payload, null, 2)); // Debugging
   
-    try {
-      const response = await axios.put(url, payload, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        }
-      });
-      console.log('Resume updated successfully:', response.data);
-      // Handle success (e.g., show a success message, redirect, etc.)
-    } catch (error) {
-      console.error('Error updating resume:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
+    
+  try {
+    // Remove double quotes from the token
+    const cleanedToken = token.replace(/"/g, '').trim(); 
+    console.log('Cleaned Authorization Header:', cleanedToken); // Log the cleaned token
+
+    const response = await axios.put(url, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': cleanedToken // Use the cleaned token
       }
+    });
+    
+    if (response.data) {
+      console.log('Resume updated successfully:', response.data);
+      // Navigate to the desired URL
+      window.location.href = 'https://novajobs.us/user/jobs-profile';
     }
-  };
+  } catch (error) {
+    console.error('Error updating resume:', error);
+    if (error.response) {
+      console.error('Response data:', error.response.data);
+      console.error('Response status:', error.response.status);
+      console.error('Response headers:', error.response.headers);
+    }
+  }
+};
   
 
   return (
     <div className='h- justify-center '>
+      {console.log(token,"3232")}
       <div className='flex justify-end border-2 p-1 bg-slate-300 '>
         <button
           onClick={() => setIsPreviewing(false)}

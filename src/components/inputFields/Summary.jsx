@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-function Summary({ summary = [], handleInputChange, }) {
+function Summary({ summary = [], handleInputChange, summaryname ,token}) {
   const [error, setError] = useState(null);
   const [apiResult, setApiResult] = useState('');
 
   const handleGetResults = async () => {
     try {
-      const token = localStorage.getItem('jobSeekerLoginToken');
+      const cleanedToken = token.replace(/"/g, '').trim(); 
+      console.log('Cleaned Authorization Header:', cleanedToken); 
+
       const response = await fetch(`https://api.abroadium.com/api/jobseeker/ai-resume-summery-data`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `${token}`
+          Authorization: `${cleanedToken}`
         },
         body: JSON.stringify({
           key: "professional_summary",
@@ -51,7 +53,7 @@ function Summary({ summary = [], handleInputChange, }) {
       {summary.length > 0 ? (
         summary.map((sum, index) => (
           <div key={index} className="flex mt-10 justify-center">
-            <div className="m-2 px-10 flex gap-3 w-3/">
+            <div className="m-2 px-10 flex gap-3 w-3/">{console.log(token)}
               <div>
                 <div className="flex justify-between font-bold text-lg my-4">
                   <h1 className="text-xl">Professional Summary</h1>
@@ -75,7 +77,7 @@ function Summary({ summary = [], handleInputChange, }) {
                 </div>
                 <ReactQuill
                   theme="snow"
-                  value={apiResult || sum.summarydescription } // Prioritize existing value or API result
+                  value={apiResult || sum.summarydescription || summaryname} // Prioritize existing value or API result
                   onChange={(content) => handleInputChange({ target: { value: content, name: 'summarydescription' } }, index, 'summary')}
                   className="w-full h-40 p-2 mb-4 break-all"
                 />

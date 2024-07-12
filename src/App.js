@@ -5,18 +5,20 @@ import Form from './components/Forms';
 import Uploadresume from './components/Uploadresume';
 import Selectionresume from './components/Selectionresume';
 import 'react-quill/dist/quill.snow.css';
-import './index.css'
+import './index.css';
+import { ResumeProvider } from './components/ResumeContext';
 
 function App() {
-  
   return (
     <Router>
       <div className="app">
-        <Routes>
-          <Route path="/form" element={<Form />} />
-          <Route path="/" element={<Selectionresume />} />
-          <Route path="/uploadresume" element={<Uploadresume />} />
-        </Routes>
+        <ResumeProvider>
+          <Routes>
+            <Route path="/form" element={<Form />} />
+            <Route path="/:token" element={<Selectionresume />} />
+            <Route path="/uploadresume/:token" element={<Uploadresume />} />
+          </Routes>
+        </ResumeProvider>
       </div>
     </Router>
   );

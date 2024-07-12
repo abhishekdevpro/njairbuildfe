@@ -1,7 +1,4 @@
-// Import useState and useEffect hooks
 import React, { useState, useEffect, useRef } from 'react';
-
-// Import other components and dependencies
 import { useNavigate } from "react-router-dom";
 import Details from './inputFields/details';
 import Experience from './inputFields/Experince';
@@ -28,7 +25,6 @@ import TemplateComponent from './forms/templateComponent';
 
 const predefinedColors = {
   Template1: '#F5F5F5',
-  
   Template3: '#F0FFF0',
   Template4: '#FFDAB9',
   Template5: 'lightgray',
@@ -43,14 +39,14 @@ const predefinedText = {
   details: {
     name: 'First Last (Name)',
     profession: 'Health and Safety Officer',
-    address: 'Atlanta, Georgia',
+    address: ' Atlanta, Georgia',
     phoneNumber: ' +1-234-456-789',
     email: ' resume@.com',
-    link: ' linkedin.com',
+    link: 'linkedin.com',
    
   },
   summary:{
-    summarydescription:'Health and safety officer with 8 years of experience developing safety policies and procedures that protect employees and encourage compliance with government regulations. Key achievement: conducted 53+ inspections to ensure 100% compliance with OSHA regulations and developed corrective action plans for non-compliance. '
+    summarydescription:`Health and safety officer with 8 years of experience developing safety policies and procedures that protect employees and encourage compliance with government regulations. Key achievement: conducted 53+ inspections to ensure 100% compliance with OSHA regulations and developed corrective action plans for non-compliance.`
   },
   experiences: {
     company: 'Resume Worded, New York, NY  ',
@@ -65,8 +61,8 @@ const predefinedText = {
     },
 
   skills: { 
-    skillname: 'Technical Skills', 
-    skilldetails: 'Industry Knowledge'
+    skillname: '● Technical Skills', 
+    skilldetails: '● Industry Knowledge'
    },
   
 };
@@ -102,6 +98,10 @@ function Form() {
   const [sections, setSections] = useState([]);
   const [nextButtonText, setNextButtonText] = useState('Next');
   const [image, setImage] = useState(null);
+  const [resumeData, setResumeData] = useState(null);
+  const [id, setid] = useState(null);
+  const [token, settokenid] = useState(null);
+  const [idFromResponse, setIdFromResponse] = useState(null); 
 
   const [screenNames, setScreenNames] = useState({
     Details: 'Details',
@@ -113,19 +113,15 @@ function Form() {
     
   });
 
-  // Define the screen components mapping
   const screenComponents = {
     Details: <Experiencescreen />,
-    Experience: <Educationscreen />, // Example for a different screen
+    Experience: <Educationscreen />,
     Education: <SkillScreen />,
-    Skills: <Summaryscreen />,
-    
-    
+    Skills: <Summaryscreen />,   
   };
 
-  // Handle the next button click
   const handleNext = () => {
-    const nextScreen = sectionsList[currentStep + 1]; // Get the name of the next screen
+    const nextScreen = sectionsList[currentStep + 1];
     if (currentStep < sectionsList.length - 1) {
       setShowComponent(true);
       setTimeout(() => {
@@ -136,10 +132,7 @@ function Form() {
       setIsPreviewing(true);
     }
   };
-  
 
-
-// Define the isDetailsComplete function
 const isDetailsComplete = () => {
   const detailsFields = formData.details[0];
   return (
@@ -153,9 +146,7 @@ const isDetailsComplete = () => {
   );
 };
 const isDetailsComplete2 = () => {
-  // Check if experiences array exists and is not empty
   if (formData.experiences && formData.experiences.length > 0) {
-    // Check if the first experience object has all required fields filled
     const experienceFields = formData.experiences[0];
     return (
       experienceFields.company.trim() !== '' &&
@@ -164,13 +155,11 @@ const isDetailsComplete2 = () => {
       experienceFields.companydescription.trim() !== '' 
     );
   }
-  return false; // Return false if experiences array is empty or undefined
+  return false;
 };
 
 const isDetailsComplete3 = () => {
-  // Check if experiences array exists and is not empty
   if (formData.education && formData.education.length > 0) {
-    // Check if the first experience object has all required fields filled
     const education = formData.education[0];
     return (
       education.schoolname.trim() !== '' &&
@@ -179,48 +168,40 @@ const isDetailsComplete3 = () => {
       education.coursename.trim() !== '' 
     );
   }
-  return false; // Return false if experiences array is empty or undefined
+  return false;
 };
 
 const isDetailsComplete4 = () => {
-  // Check if experiences array exists and is not empty
   if (formData.skill && formData.skill.length > 0) {
-    // Check if the first experience object has all required fields filled
     const skill = formData.skill[0];
     return (
       skill.skillname.trim() !== '' &&
       skill.skilldetails.trim() !== '' 
     );
   }
-  return false; // Return false if experiences array is empty or undefined
+  return false; 
 };
 const isDetailsComplete5 = () => {
-  // Check if experiences array exists and is not empty
   if (formData.section && formData.section.length > 0) {
-    // Check if the first experience object has all required fields filled
     const section = formData.section[0];
     return (
       section.sectiontitle.trim() !== '' &&
       section.sectiondescription.trim() !== ''  
     );
   }
-  return false; // Return false if experiences array is empty or undefined
+  return false; 
 };
 
 const isDetailsComplete6 = () => {
-  // Check if experiences array exists and is not empty
   if (formData.summary && formData.summary.length > 0) {
-    // Check if the first experience object has all required fields filled
     const summary = formData.summary[0];
     return (
       
       summary.summarydescription.trim() !== ''  
     );
   }
-  return false; // Return false if experiences array is empty or undefined
+  return false; 
 };
-
-
 
 useEffect(() => {
   // Check if all required details fields are filled whenever the current step changes
@@ -244,15 +225,13 @@ useEffect(() => {
 const handleInputChange = (e, index, section) => {
   const { name, value } = e.target;
 
-  // If the input field is companydescription and a double newline is entered,
-  // replace it with a single newline character
-  const updatedValue = name === 'companydescription' ? value.replace(/\n\n/g, '\n') : value;
+  const updatedFormData = { ...formData };
 
-  const updatedSection = formData[section].map((item, i) =>
-    i === index ? { ...item, [name]: updatedValue } : item
+  updatedFormData[section] = formData[section].map((item, i) =>
+    i === index ? { ...item, [name]: value } : item
   );
-  setFormData({ ...formData, [section]: updatedSection });
-  setIsSaving(true);
+
+  setFormData(updatedFormData);
 };
 
 useEffect(() => {
@@ -279,10 +258,6 @@ const handleKeyPress = (e, index, section) => {
     handleInputChange(e, index, section, { companydescription: updatedDescription });
   }
 };
-
-
-
-
 
 const handlePrevious = () => {
   if (currentStep > 0) {
@@ -373,9 +348,7 @@ const deleteSectionAdd = (index) => {
   setFormData({ ...formData, sectionadd: updatedSectionAdd });
 };
 
-
-
-console.log(formData)
+console.log(formData);
 useEffect(() => {
   // Clear the input value after image upload
   const imageInput = document.getElementById('profilePicture');
@@ -388,10 +361,42 @@ useEffect(() => {
   localStorage.setItem('formData', JSON.stringify(formData));
 }, [formData]);
 
-return (
-  <div className="h-screen">
+
+useEffect(() => {
+  // Retrieve resume data from localStorage
+  const storedResumeData = localStorage.getItem('resumeData');
+  if (storedResumeData) {
+    setResumeData(JSON.parse(storedResumeData));
+  }
+}, []);
+
+useEffect(() => {
+  // Retrieve resume data from localStorage
+  const storedId = localStorage.getItem('resumeId');
+  if (storedId) {
+    setid(storedId); // Assuming setid is your state setter function
+  }
+
+  console.log(id, 'test for id'); // Log the current value of id
+
+}, []);
+
+useEffect(() => {
+  // Retrieve resume data from localStorage
+  const tokenIdd = localStorage.getItem('jobSeekerLoginToken');
+  if (tokenIdd) {
+    settokenid(tokenIdd); // Assuming setid is your state setter function
+  }
+
+  console.log(token, 'settokeniddsd'); // Log the current value of id
+
+}, []);
+return (<div>
+   {resumeData?(<><div className="h-screen">
     {!isPreviewing ? (
       <>
+      {console.log(id,'testfo rid')}
+      {console.log(token, 'settokeniddsd')}
       <div className="flex flex-col sm:flex-row justify-between border-2 p-1 bg-slate-300">
   <button
     onClick={handlePrevious}
@@ -437,17 +442,228 @@ return (
               isDetailsComplete6={isDetailsComplete6}
             />
           </div>
-          <div className="flex w-full sm:w-4/5  justify-center">
-            <div className="absolute h-screen">
+          <div className="flex w-full sm:w-full justify-end">
+            <div className="absolute h-screen ">
               {/* Conditionally render the screen component based on the current section */}
               {showComponent && screenComponents[sectionsList[currentStep]]}
             </div>
-            <div className="w-4/5 p-3 h-screen ">
+            <div className="w-3/6 p-3 h-screen">
+          
               {/* Render Active Section */}
               {(() => {
                 switch (sectionsList[currentStep]) {
                   case 'Details':
                     return <Details
+                    firstname={resumeData.details?.firstname}
+                    lastname={resumeData.details?.lastname}
+                    address= {resumeData.details?.address}
+                    phone={resumeData.details?.phone}
+                    email={resumeData.details?.email}
+                    location={resumeData.details?.city}
+                    profession={resumeData.details?.profession}
+                    token={token}
+                    image={image}
+                    setImage={setImage}
+                    details={formData.details}
+                    handleInputChange={handleInputChange}
+                 
+                  />;
+                  
+                  case 'Experience':
+                    return (
+                      <>
+                        <Experience
+                       company={resumeData.employmenthistory[1]?.company}
+                       dates={resumeData.employmenthistory[0]?.dates}
+location={resumeData.employmenthistory[0]?.location}
+position={resumeData.employmenthistory[0]?.position}
+summary={resumeData.employmenthistory[0]?.responsibilities}
+start_date={resumeData.employmenthistory[0]?.start_date}
+token={token}
+                          experiences={formData.experiences}
+                          handleInputChange={handleInputChange}
+                          handleKeyPress={handleKeyPress}
+                          addExperience={() => addField('experiences')}
+                          deleteExperience={(index) => deleteField(index, 'experiences')}
+                        />
+                        
+                      </>
+                    );
+                  case 'Education':
+                    return (
+                      <Education
+                      schoolname={resumeData.education?.institution}
+                      schoolplace={resumeData.education?.location}
+                      coursename={resumeData.education?.degree}
+                      token={token}
+                        educations={formData.educations}
+                        handleInputChange={handleInputChange}
+                        addEducation={() => addField('educations')}
+                        deleteEducation={(index) => deleteField(index, 'educations')}
+                      />
+                    );
+                  case 'Skills':
+                    return (
+                      <Skills
+                      skillsfromapi={resumeData.skills}
+                      token={token}
+                        skills={formData.skills}
+                        handleInputChange={handleInputChange}
+                        addSkill={() => addField('skills')}
+                        deleteSkill={(index) => deleteField(index, 'skills')}
+                        selectedTemplate={selectedTemplate}
+                      />
+                    );
+                  case 'summary':
+                    return <Summary summary={formData.summary} 
+                    handleInputChange={handleInputChange}
+                    token={token}
+                    summaryname= {resumeData.professionalsummary} />;
+                  case 'Language':
+                    return (
+                      <Language
+                        formData={formData.language}
+                        handleInputChange={handleInputChange}
+                        selectedTemplate={selectedTemplate}
+                        token={token}
+                      />
+                    );
+                  case 'SectionAdd':
+                    return (
+                      <SectionAdd
+                        sectionadd={formData.sectionadd}
+                        sectionadd2={formData.sectionadd2}
+                        handleInputChange={handleSectionInputChange}
+                        handleInputChange2={handleSectionInputChange2}
+                        addSectionAdd={addSectionAdd}
+                        addSectionAdd2={addSectionAdd2}
+                        addSectionAdd3={addSectionAdd3}
+                        addSectionAdd4={addSectionAdd4}
+                        deleteSectionAdd={deleteSectionAdd}
+                        selectedTemplate={selectedTemplate}
+                        token={token}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })()}
+            </div>
+            <div className=" w-4/6 ms-10 overflow-y-auto overflow-x-auto h-full  py-10 mb-10 border-r-2">
+              <div className=' mb-5 ms-60 '><Tooltip/></div>
+              
+              <TemplateComponent
+              image={image}
+                ref={cvRef}
+                data={formData}
+                selectedTemplate={selectedTemplate}
+                setSelectedTemplate={setSelectedTemplate}
+                selectedFont={selectedFont}
+                boxBgColor={boxBgColor}
+                setBoxBgColor={setBoxBgColor}
+                predefinedText={predefinedText}
+                resumeSkills={resumeData.skills}  // Pass resume skills data
+                skillsfromapi={resumeData.skills}
+                 id={resumeData.id}
+                 token={token}
+              />
+              <div className='my-2 px-10 '>
+       <TemplateSelector selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+       </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+      
+      <PreviewSection
+      image={image}
+        handlePrint={handlePrint}
+        setIsPreviewing={setIsPreviewing}
+        isSaving={isSaving}
+        selectedTemplate={selectedTemplate}
+        cvRef={cvRef}
+        formData={formData}
+        handleSectionInputChange={handleSectionInputChange}
+        addSectionAdd={addSectionAdd}
+        deleteSectionAdd={deleteSectionAdd}
+        setSelectedTemplate={setSelectedTemplate}
+        hideIsDetailsComplete={true}
+        selectedFont={selectedFont}
+         setSelectedFont={setSelectedFont}
+         setBoxBgColor={setBoxBgColor} boxBgColor={boxBgColor}
+         predefinedText={predefinedText}
+         skillsfromapi={resumeData.skills}
+        id={id}
+        token={token}
+      />
+      </>
+    )}
+  
+  </div></>):(<>
+    <div className="h-screen">
+    {!isPreviewing ? (
+      <>
+        {console.log(id,'testfo dsdsrid')}
+      <div className="flex flex-col sm:flex-row justify-between border-2 p-1 bg-slate-300">
+  <button
+    onClick={handlePrevious}
+    className="bg-white text-blue-800 border-blue-800 border-2 px-6 sm:px-10 py-2 rounded-full font-bold mb-2 sm:mb-0 hidden sm:block"
+    disabled={currentStep === 0}
+  >
+    Previous
+  </button>
+  <div className="flex flex-wrap sm:flex-nowrap gap-3 items-center">
+    {/* Fonts selector (hidden on mobile) */}
+    <div className="font-semibold hidden sm:block">Fonts:</div>
+    <div className="flex gap-3 items-center hidden sm:flex">
+      <FontSelector selectedFont={selectedFont} setSelectedFont={setSelectedFont} />
+    </div>
+    
+    {/* Color selector (hidden on mobile) */}
+    <div className="font-semibold hidden sm:block">Color:</div>
+    <div className="flex gap-3 items-center hidden sm:flex">
+      <ColorButtons setBoxBgColor={setBoxBgColor} />
+    </div>
+  </div>
+  <button
+    onClick={handleNext}
+    className={`${currentStepColor} bg-yellow-500 px-6 sm:px-10 py-2 rounded-full font-bold`}
+  >
+    {screenNames[sectionsList[currentStep + 1]] || 'Preview'}
+  </button>
+</div>
+
+        <div className="flex">
+        <div className="w-1/6 bg-[#333456] hidden md:block">
+            <Slider
+              sectionsList={sectionsList}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              isDetailsComplete={isDetailsComplete}
+              Step={currentStep}
+             
+              isDetailsComplete2={isDetailsComplete2}
+              isDetailsComplete3={isDetailsComplete3}
+              isDetailsComplete4={isDetailsComplete4}
+              isDetailsComplete5={isDetailsComplete5}
+              isDetailsComplete6={isDetailsComplete6}
+            />
+          </div>
+          <div className="flex w-full sm:w-full justify-end">
+            <div className="absolute h-screen ">
+              {/* Conditionally render the screen component based on the current section */}
+              {showComponent && screenComponents[sectionsList[currentStep]]}
+            </div>
+            <div className="w-3/6 p-3 h-screen">
+          
+              {/* Render Active Section */}
+              {(() => {
+                switch (sectionsList[currentStep]) {
+                  case 'Details':
+                    return <Details
+                   
                     image={image}
                     setImage={setImage}
                     details={formData.details}
@@ -471,6 +687,7 @@ return (
                   case 'Education':
                     return (
                       <Education
+                    
                         educations={formData.educations}
                         handleInputChange={handleInputChange}
                         addEducation={() => addField('educations')}
@@ -480,6 +697,7 @@ return (
                   case 'Skills':
                     return (
                       <Skills
+                     
                         skills={formData.skills}
                         handleInputChange={handleInputChange}
                         addSkill={() => addField('skills')}
@@ -488,7 +706,9 @@ return (
                       />
                     );
                   case 'summary':
-                    return <Summary summary={formData.summary} handleInputChange={handleInputChange} />;
+                    return <Summary summary={formData.summary} 
+                    handleInputChange={handleInputChange}
+                    />;
                   case 'Language':
                     return (
                       <Language
@@ -517,7 +737,7 @@ return (
                 }
               })()}
             </div>
-            <div className="w-3/5 overflow-y-auto overflow-x-auto h-full justify-center  py-10 mb-10 hidden md:block">
+            <div className=" w-4/6 ms-10 overflow-y-auto overflow-x-auto h-full  py-10 mb-10 border-r-2">
               <div className=' mb-5 ms-60 '><Tooltip/></div>
               
               <TemplateComponent
@@ -565,8 +785,12 @@ return (
       </>
     )}
   
-  </div>
+  </div> </>)}
+</div>
+ 
 );
 }
 
 export default Form;
+
+

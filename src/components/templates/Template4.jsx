@@ -8,7 +8,8 @@ const Template4 = ({
   sectionSpacing,
   paragraphSpacing,
   lineSpacing,
-  isPreviewScreen 
+  isPreviewScreen ,
+  predefinedText = {},
 }) => {
   // Define classes based on props
   const textSizeClass = textSize === 'small' ? 'text-sm' : textSize === 'medium' ? 'text-base' : 'text-lg';
@@ -54,25 +55,25 @@ const Template4 = ({
       style={{ fontFamily: font, }}
     >
         {/* Red circle indicating all fields are filled */}
-        {!isPreviewScreen &&(
+        {!isPreviewScreen &&  (
         <div className="">
           {allDetailsFilled && (
-            <div className="w-7 h-7 ps-2.5  mt-3 bg-white rounded-2xl absolute top-48 left-10 font-bold">1</div>
+            <div className="w-7 h-7 ps-2.5 mt-5 bg-white rounded-2xl absolute top-48 left-10 font-bold">1</div>
           )}
           {allDetailsFilled2 && (
-            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-2 bg-white rounded-2xl absolute top-60 left-10 font-bold">2</div>
+            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-4 bg-white rounded-2xl absolute top-60 left-10 font-bold">2</div>
           )}
           {allDetailsFilled3 && (
-            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-2 bg-white rounded-2xl absolute top-72 left-10 font-bold">3</div>
+            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-4 bg-white rounded-2xl absolute top-72 left-10 font-bold">3</div>
           )}
           {allDetailsFilled4 && (
-            <div className="w-7 h-8 ps-2.5  mt-6 bg-white rounded-2xl absolute top-80 left-10 font-bold">4</div>
+            <div className="w-7 h-8 ps-2.5 mt-8 bg-white rounded-2xl absolute top-80 left-10 font-bold">4</div>
           )}
           {allDetailsFilled5 && (
-            <div className="w-7 h-7 ps-2.5  mt-14 bg-white rounded-2xl absolute top-96 left-10 font-bold">6</div>
+            <div className="w-7 h-7 ps-2.5 mt-16 bg-white rounded-2xl absolute top-96 left-10 font-bold">6</div>
           )}
           {allDetailsFilled6 && (
-            <div className="w-7 h-7 ps-2.5  mt-2  bg-white rounded-2xl absolute top-96 left-10 font-bold">5</div>
+            <div className="w-7 h-7 ps-2.5 mt-4 bg-white rounded-2xl absolute top-96 left-10 font-bold">5</div>
           )}
         </div>
       )}
@@ -93,9 +94,12 @@ const Template4 = ({
     </ul>
     {summary.map((sum, index) => (
       <div key={index}>
-        <p className={`${paragraphSpacingClass} text-xs sm:text-sm md:text-sm lg:text-sm m-2 w-2/2 break-all`}>{sum.summarydescription}</p>
-        <br />
-      </div>
+      <p
+        className={`${paragraphSpacingClass} text-xs sm:text-sm md:text-sm lg:text-sm m-2 w-2/2 break-all`}
+        dangerouslySetInnerHTML={{ __html: sum.summarydescription || predefinedText.summary.summarydescription }}
+      />
+      <br />
+    </div>
     ))}
     <br />
   </div>
