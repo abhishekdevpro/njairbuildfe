@@ -88,6 +88,7 @@ function Selectionresume() {
             <div className="flex justify-between p-2 h-14 bg-blue-300">
                 <img src={logo} alt="Logo" style={{ width: '130px' }} />
             </div>
+            {console.log(token)}
             <div className="min-h-screen flex flex-col ">
                 <div className="text-center my-10">
                     <h1 className="font-bold text-3xl mb-3">Are you uploading an existing resume?</h1>
