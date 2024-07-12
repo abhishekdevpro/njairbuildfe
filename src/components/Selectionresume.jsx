@@ -14,10 +14,10 @@ import { useResume } from "./ResumeContext";
 function Selectionresume() {
    
     const navigate = useNavigate();
-    const { token } = useParams(); // Extract token from URL parameters
-    const [loading, setLoading] = useState(false);
-    const [file, setFile] = useState(null);
-    const { saveResumeId } = useResume();
+  const { token } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
+  const { saveResumeId, savetoken } = useResume();
   
   
   console.log(token, "tokennn")
@@ -55,11 +55,13 @@ function Selectionresume() {
   
         console.log("Full API Response:", response.data.data[0].id);
   
-        if (!response.data.data || !response.data.data[0] || !response.data.data[0].resume_parse_data) {
+        const resumeData = response.data.data[0];
+        if (!resumeData || !resumeData.resume_parse_data) {
           toast.error("Resume data not found in API response");
           setLoading(false);
           return;
         }
+  
   
         const parsedData = JSON.parse(resumeData.resume_parse_data);
       localStorage.setItem('resumeData', JSON.stringify(parsedData.templateData));
@@ -77,7 +79,7 @@ function Selectionresume() {
       setLoading(false);
     }
   };
-  
+
     const handleClick = () => {
         navigate('/form');
     };
