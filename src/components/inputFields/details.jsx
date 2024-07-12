@@ -137,7 +137,7 @@ console.log(image);
                       <input
                         type="text"
                         name="name"
-                        value={del.name ||" "||firstname }
+                        value={del.name ||firstname || ""}
                         onChange={(e) => handleInputChange(e, index, 'details')}
                         placeholder="e.g. Ben, e.g. Dexter"
                         className="w-full p-2 mb-4 border border-black rounded-lg "
@@ -150,7 +150,7 @@ console.log(image);
                       <input
                         type="text"
                         name="Profession"
-                        value={del.Profession ||" " || profession}
+                        value={del.Profession || profession ||""}
                         onChange={(e) => handleInputChange(e, index, 'details')}
                         placeholder="e.g. Software Engineer"
                         className="w-full p-2 mb-4 border border-black rounded-lg "
@@ -166,7 +166,7 @@ console.log(image);
                     <input
                       type="text"
                       name="address"
-                      value={del.address||" "  || address }
+                      value={del.address  || address ||""}
                       onChange={(e) => handleInputChange(e, index, 'details')}
                       placeholder="e.g. City, e.g. Country"
                       className="w-full p-2 mb-4 border border-black rounded-lg"
@@ -179,7 +179,7 @@ console.log(image);
                     <input
   type="text"
   name="phoneNumber"
-  value={del.phoneNumber||" " || phone }
+  value={del.phoneNumber || phone || ""}
   onChange={(e) => handleInputChange(e, index, 'details')}
   placeholder="e.g. +91 22 1234 5677"
   className="w-full p-2 mb-4 border border-black rounded-lg"
@@ -195,7 +195,7 @@ console.log(image);
                                         <input
                                           type="email"
                                           name="email"
-                                          value={ del.email||" " ||email}
+                                          value={ del.email ||email ||""}
                                           onChange={(e) => handleInputChange(e, index, 'details')}
                                           placeholder="e.g. dexter.ben"
                                           className="w-full p-2 mb-4 border border-black rounded-lg"
