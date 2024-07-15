@@ -55,23 +55,21 @@ const Template6 = ({
         {/* Red circle indicating all fields are filled */}
         {!isPreviewScreen &&  (
         <div className="">
-          {allDetailsFilled && (
-            <div className="w-7 h-7 ps-2.5 mt-5 bg-white rounded-2xl absolute top-48 left-10 font-bold">1</div>
+           {allDetailsFilled && (
+            <div className="w-7 h-7 ps-2.5 mt-11 bg-white rounded-2xl absolute top-48 left-10 font-bold">1</div>
           )}
           {allDetailsFilled2 && (
-            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-4 bg-white rounded-2xl absolute top-60 left-10 font-bold">2</div>
+            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-10 bg-white rounded-2xl absolute top-60 left-10 font-bold">2</div>
           )}
           {allDetailsFilled3 && (
-            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-4 bg-white rounded-2xl absolute top-72 left-10 font-bold">3</div>
+            <div className="w-7 h-8 ps-2.5 pt-0.5 mt-10 bg-white rounded-2xl absolute top-72 left-10 font-bold">3</div>
           )}
           {allDetailsFilled4 && (
-            <div className="w-7 h-8 ps-2.5 mt-8 bg-white rounded-2xl absolute top-80 left-10 font-bold">4</div>
+            <div className="w-7 h-8 ps-2.5 mt-14 bg-white rounded-2xl absolute top-80 left-10 font-bold">4</div>
           )}
-          {allDetailsFilled5 && (
-            <div className="w-7 h-7 ps-2.5 mt-16 bg-white rounded-2xl absolute top-96 left-10 font-bold">6</div>
-          )}
+          
           {allDetailsFilled6 && (
-            <div className="w-7 h-7 ps-2.5 mt-4 bg-white rounded-2xl absolute top-96 left-10 font-bold">5</div>
+            <div className="w-7 h-7 ps-2.5 mt-10 bg-white rounded-2xl absolute top-96 left-10 font-bold">5</div>
           )}
         </div>
       )}
