@@ -21,7 +21,8 @@ const PreviewSection = ({
   setBoxBgColor,
   skillsfromapi,
   id,
-  token
+  token,
+  token1
 }) => {
   const [textSize, setTextSize] = useState(2);
   const [sectionSpacing, setSectionSpacing] = useState(2);
@@ -29,7 +30,7 @@ const PreviewSection = ({
   const [lineSpacing, setLineSpacing] = useState(1.5);
   const [isPreviewScreen, setIsPreviewScreen] = useState(true);
   const [accuracyPercentage, setAccuracyPercentage] = useState(null);
-console.log(skillsfromapi,'api')
+console.log(skillsfromapi,'api',token1)
   
   const resumeScore = async () => {
     try {
@@ -57,6 +58,11 @@ console.log(skillsfromapi,'api')
     } catch (error) {
       console.error('Error fetching data from API', error);
     }
+  };
+
+  const handleButtonClick = async () => {
+    await updateResume();
+    window.location.href = 'https://novajobs.us/user/jobs-profile';
   };
 
   const updateResume = async () => {
@@ -199,12 +205,12 @@ console.log(skillsfromapi,'api')
             </div>
           </div>
           <button
-            type="button"
-            onClick={updateResume}
-            className="ms-5 mt-5 mb-10 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-bold rounded-full px-28 py-3 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 "
-          >
-            Finish Resume
-          </button>
+  type="button"
+  onClick={handleButtonClick}
+  className="ms-5 mt-5 mb-10 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-bold rounded-full px-28 py-3 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 "
+>
+  Finish Resume
+</button>
           <div>
       {accuracyPercentage !== null ? (
         <div className="api-data-container border-amber-600 border-4 py-4 ms-3">

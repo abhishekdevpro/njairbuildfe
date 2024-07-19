@@ -102,7 +102,7 @@ function Form() {
   const [id, setid] = useState(null);
   const [token, settokenid] = useState(null);
   const [idFromResponse, setIdFromResponse] = useState(null); 
-
+  const [location, setlocation] = useState(null);
   const [screenNames, setScreenNames] = useState({
     Details: 'Details',
     Experience: 'Next: Work Experience',
@@ -391,6 +391,16 @@ useEffect(() => {
    // Log the current value of id
 
 }, []);
+useEffect(() => {
+  
+  const locationid = localStorage.getItem('location');
+  if (locationid) {
+    setlocation(locationid); 
+  }
+
+
+}, []);
+{console.log(token, 'settokedgfdgsdgsdgniddsd')}
 return (<div>
    {resumeData?(<><div className="h-screen">
     {!isPreviewing ? (
@@ -518,6 +528,7 @@ token={token}
                     return <Summary summary={formData.summary} 
                     handleInputChange={handleInputChange}
                     token={token}
+                    location={location}
                     summaryname= {resumeData.professionalsummary} />;
                   case 'Language':
                     return (
@@ -566,6 +577,8 @@ token={token}
                 skillsfromapi={resumeData.skills}
                  id={resumeData.id}
                  token={token}
+                 
+    location={location}
               />
               <div className='my-2 px-10 '>
        <TemplateSelector selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
@@ -597,12 +610,14 @@ token={token}
          skillsfromapi={resumeData.skills}
         id={id}
         token={token}
+        location={location}
       />
       </>
     )}
   
   </div></>):(<>
     <div className="h-screen">
+    {console.log(token, 'settokedgfdgsdgsdgniddsd')}
     {!isPreviewing ? (
       <>
         {console.log(id,'testfo dsdsrid')}
@@ -750,7 +765,9 @@ token={token}
                 boxBgColor={boxBgColor}
                 setBoxBgColor={setBoxBgColor}
                 predefinedText={predefinedText}
-              
+                token={token}
+                 
+    location={location}
               
               />
               <div className='my-2 px-10 '>
@@ -780,7 +797,8 @@ token={token}
          setSelectedFont={setSelectedFont}
          setBoxBgColor={setBoxBgColor} boxBgColor={boxBgColor}
          predefinedText={predefinedText}
-        
+         location={location}
+         token={token}
       />
       </>
     )}

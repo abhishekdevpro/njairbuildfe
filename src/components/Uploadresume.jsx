@@ -13,7 +13,8 @@ function Uploadresume() {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const { saveResumeId, savetoken } = useResume();
-
+  const [idFromResponse, setIdFromResponse] = useState(null); 
+  const [locationFromResponse, setlocationFromResponse] = useState(null); 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -52,23 +53,31 @@ function Uploadresume() {
         return;
       }
 
-      const parsedData = JSON.parse(resumeData.resume_parse_data);
+      const parsedData = JSON.parse(response.data.data[0].resume_parse_data);
+      console.log("Parsed Resume Data:", parsedData);
+  
+      // Store resume data and id in localStorage
       localStorage.setItem('resumeData', JSON.stringify(parsedData.templateData));
-      saveResumeId(resumeData.id);
-      localStorage.setItem('jobSeekerLoginToken', token);
-      savetoken(token);
-
+      localStorage.setItem('resumeId', response.data.data[0].id);
+      localStorage.setItem('location', response.data.data[0].file_path);
+  
+      // Set idFromResponse state with the id
+      setIdFromResponse(response.data.data[0].id);
+      
+      setlocationFromResponse(response.data.data[0].resume_parse_data);
+  
       toast.success("File uploaded successfully");
       setLoading(false);
-      setFile(null); // Reset the file input
-      navigate(`/form?id=${resumeData.id}`);
+  
+      // Navigate to resume display page with id as parameter
+      navigate(`/dashboard/form?id=${response.data.data[0].id}`);
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error("File upload failed. Please try again.");
+      toast.error("File upload failed");
       setLoading(false);
     }
   };
-
+  localStorage.setItem('token', token);
   return (
     <>
       <div className="h-screen">

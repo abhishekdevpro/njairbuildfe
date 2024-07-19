@@ -82,6 +82,8 @@ function Selectionresume() {
 
     const handleClick = () => {
         navigate('/form');
+        localStorage.setItem('jobSeekerLoginToken', token);
+      savetoken(token);
     };
 
 
