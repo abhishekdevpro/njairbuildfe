@@ -22,7 +22,8 @@ const PreviewSection = ({
   skillsfromapi,
   id,
   token,
-  token1
+  token1,
+  image
 }) => {
   const [textSize, setTextSize] = useState(2);
   const [sectionSpacing, setSectionSpacing] = useState(2);
@@ -173,6 +174,7 @@ console.log(skillsfromapi,'api',token1)
       <div className='flex justify-center mb-40'>
         <div className="w-3/6 pt-10 overflow-auto mb-10">
           <TemplateComponent
+           image={image}
             ref={cvRef}
             data={formData}
             selectedTemplate={selectedTemplate}
