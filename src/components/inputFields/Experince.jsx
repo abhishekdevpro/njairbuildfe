@@ -45,12 +45,13 @@ const Experience = ({
   const handleSearchChange = async (e) => {
     const value = e.target.value;
     setSearchValue(value);
-  
+    const cleanedToken = token.replace(/"/g, '').trim(); 
+    console.log('Cleaned Authorization Header:', cleanedToken); 
+    
     if (e.key === 'Enter' && value.length > 2) { // Check if Enter key is pressed
       setIsLoading(true);
       try {
-        const cleanedToken = token.replace(/"/g, '').trim(); 
-    console.log('Cleaned Authorization Header:', cleanedToken); 
+        
   
         const response = await fetch('https:///api.novajobs.us/api/resumebuild/ai-resume-profexp-data', {
           method: 'POST',
