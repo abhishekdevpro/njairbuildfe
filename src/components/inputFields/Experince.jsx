@@ -221,7 +221,7 @@ const Experience = ({
                       <line x1="9" y1="12" x2="15" y2="12" stroke="white" />
                       <line x1="12" y1="9" x2="12" y2="15" stroke="white" />
                     </svg>
-                    <h3>AI - Assist</h3>
+                    <h3>AI - Ass</h3>
                   </button>
                   {dropdownVisible && (
                     <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
