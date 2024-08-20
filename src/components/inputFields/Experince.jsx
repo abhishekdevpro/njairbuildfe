@@ -45,48 +45,42 @@ const Experience = ({
   const handleSearchChange = async (e) => {
     const value = e.target.value;
     setSearchValue(value);
-
-    if (!token) {
-        console.error('Token is undefined');
-        return;  // Exit the function if token is undefined
-    }
-
-    const cleanedToken = token.replace(/"/g, '').trim(); 
-    console.log('Cleaned Authorization Header:', cleanedToken); 
-
+  
     if (e.key === 'Enter' && value.length > 2) { // Check if Enter key is pressed
-        setIsLoading(true);
-        try {
-            const response = await fetch('https://api.novajobs.us/api/resumebuild/ai-resume-profexp-data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': cleanedToken
-                },
-                body: JSON.stringify({
-                    key: "professional_experience",
-                    keyword: "Cecklist of professional experience in manner of content and informations",
-                    Content: value
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-
-            const data = await response.json();
-            const responsibilities = data.data.resume_analysis.responsibilities || [];
-            setSearchResults(responsibilities);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
+      setIsLoading(true);
+      try {
+        const cleanedToken = token.replace(/"/g, '').trim(); 
+    console.log('Cleaned Authorization Header:', cleanedToken); 
+  
+        const response = await fetch('https:///api.novajobs.us/api/resumebuild/ai-resume-profexp-data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': cleanedToken
+          },
+          body: JSON.stringify({
+            key: "professional_experience",
+            keyword: "Cecklist of professional experience in manner of content and informations ",
+            Content: value
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
         }
+  
+        const data = await response.json();
+        const responsibilities = data.data.resume_analysis.responsibilities || [];
+        setSearchResults(responsibilities);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
-        setSearchResults([]);
+      setSearchResults([]);
     }
-};
-
+  };
   
   
   const handleDescriptionChange = (value, index) => {
@@ -104,11 +98,8 @@ const Experience = ({
     setDropdownVisible(false); 
   }
 
-  
-
   return (
     <div className='mt-4 text-xs sm:text-xs md:text-xs lg:text-xs'>
-      
       <div className="px-20 w-full">
         {experiences.map((exp, index) => (
           <div key={index} className="flex mt-4">
@@ -219,7 +210,7 @@ const Experience = ({
                       <line x1="9" y1="12" x2="15" y2="12" stroke="white" />
                       <line x1="12" y1="9" x2="12" y2="15" stroke="white" />
                     </svg>
-                    <h3>AI - Ass</h3>
+                    <h3>AI - Assist</h3>
                   </button>
                   {dropdownVisible && (
                     <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">

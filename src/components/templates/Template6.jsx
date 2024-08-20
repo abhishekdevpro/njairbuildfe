@@ -92,12 +92,25 @@ const Template6 = ({
           </ul>
         </div>
 
-        {summary.map((sum, index) => (
-          <div key={index}>
-            <p className={`${paragraphSpacingClass} text-xs md:text-xs lg:text-xs m-5 w-2/2 break-all`}>{sum.summarydescription || predefinedText.summary.summarydescription}</p>
-            
-          </div>
-        ))}
+        {summary.length > 0 ? (
+  summary.map((sum, index) => (
+    <div key={index}><div className='font-bold'>Summary</div>
+      <p
+        className={`${paragraphSpacingClass} text-xs sm:text-xs md:text-xs lg:text-sm m-2 w-2/2 break-all`}
+        dangerouslySetInnerHTML={{ __html: sum.summarydescription.trim() || predefinedText.summary.summarydescription }}
+      />
+      <br />
+    </div>
+  ))
+) : (
+  <div>
+    <p
+      className={`${paragraphSpacingClass} text-xs sm:text-sm md:text-sm lg:text-sm m-2 w-2/2 break-all`}
+      dangerouslySetInnerHTML={{ __html: predefinedText.summary.summarydescription }}
+    />
+    <br />
+  </div>
+)}
 
         <div className='flex'>
           <div className='w-2/6'>

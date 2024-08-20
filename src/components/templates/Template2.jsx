@@ -80,15 +80,25 @@ const Template2 = ({
               <h3 className="text-lg md:text-xl lg:text-3xl text-blue-800 font-bold ">{del.name || predefinedText.details.name}</h3>
               <p className='text-lg md:text-xl lg:text-lg mt-2'> {del.Profession || predefinedText.details.profession}</p>
 
-              {summary.map((sum, index) => (
-                <div key={index}>
-                <p
-                  className={`${paragraphSpacingClass} text-xs sm:text-xs md:text-xs lg:text-xs m-2 w-2/2 break-all`}
-                  dangerouslySetInnerHTML={{ __html: sum.summarydescription || predefinedText.summary.summarydescription }}
-                />
-               
-              </div>
-              ))}
+              {summary.length > 0 ? (
+  summary.map((sum, index) => (
+    <div key={index}><div className='font-bold'>Summary</div>
+      <p
+        className={`${paragraphSpacingClass} text-xs sm:text-sm md:text-sm lg:text-sm m-2 w-2/2 break-all`}
+        dangerouslySetInnerHTML={{ __html: sum.summarydescription.trim() || predefinedText.summary.summarydescription }}
+      />
+      <br />
+    </div>
+  ))
+) : (
+  <div>
+    <p
+      className={`${paragraphSpacingClass} text-xs sm:text-sm md:text-sm lg:text-sm m-2 w-2/2 break-all`}
+      dangerouslySetInnerHTML={{ __html: predefinedText.summary.summarydescription }}
+    />
+    <br />
+  </div>
+)}
               
               <h5 className='text-blue-800 '>WORK EXPERIENCE </h5><br />
               <div className="flex-grow border-t border-gray-300 align-super"></div>
