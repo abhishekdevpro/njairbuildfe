@@ -52,7 +52,7 @@ const predefinedText = {
     company: 'Resume Worded, New York, NY  ',
      role: 'Health and Safety Officer', 
      companydescription: 'Executed internal environmental health and safety (EHS) audits of several work locations to identify potential hazards; recommended corrective actions that increased compliance by 91%. ',
-     companyplace: 'Delhi, India'
+     companyplace: 'USA, India'
   },
   educations: { 
     coursename: 'Word University', 

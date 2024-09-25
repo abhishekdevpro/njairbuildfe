@@ -47,40 +47,48 @@ const Experience = ({
     setSearchValue(value);
   
     if (e.key === 'Enter' && value.length > 2) { // Check if Enter key is pressed
-      setIsLoading(true);
-      try {
-        const cleanedToken = token.replace(/"/g, '').trim(); 
-    console.log('Cleaned Authorization Header:', cleanedToken); 
-  
-        const response = await fetch('https:///api.novajobs.us/api/resumebuild/ai-resume-profexp-data', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': cleanedToken
-          },
-          body: JSON.stringify({
-            key: "professional_experience",
-            keyword: "Cecklist of professional experience in manner of content and informations ",
-            Content: value
-          }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-  
-        const data = await response.json();
-        const responsibilities = data.data.resume_analysis.responsibilities || [];
-        setSearchResults(responsibilities);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      setSearchResults([]);
+      if (!token) {
+        // Redirect to login page if token is missing
+        window.location.href = "https://novajobs.us/user"; 
+        return; // Exit early if there's no token
     }
-  };
+        
+        setIsLoading(true);
+        try {
+            const cleanedToken = token.replace(/"/g, '').trim(); 
+            console.log('Cleaned Authorization Header:', cleanedToken); 
+  
+            const response = await fetch('https://api.novajobs.us/api/resumebuild/ai-resume-profexp-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': cleanedToken
+                },
+                body: JSON.stringify({
+                    key: "professional_experience",
+                    keyword: "Checklist of professional experience in manner of content and informations",
+                    Content: value
+                }),
+            });
+  
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+  
+            const data = await response.json();
+            const responsibilities = data.data.resume_analysis.responsibilities || [];
+            setSearchResults(responsibilities);
+        } catch (err) {
+            console.error("Error fetching data:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    } else {
+        setSearchResults([]);
+    }
+};
+
   
   
   const handleDescriptionChange = (value, index) => {
@@ -188,7 +196,7 @@ const Experience = ({
                   name="companyplace" 
                   value={exp.companyplace || location}
                   onChange={(e) => handleInputChange(e, index, 'experiences')}
-                  placeholder="e.g. Delhi, India" 
+                  placeholder="e.g. USA" 
                   className="w-full p-3 mb-4 border border-black rounded-lg"
                 />
               </div>

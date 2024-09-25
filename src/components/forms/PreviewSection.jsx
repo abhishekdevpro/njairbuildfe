@@ -192,8 +192,21 @@ console.log(skillsfromapi,'api',token1)
         </div>
         <div className='py-9 w-1/4'>
           <div className='flex justify-around'>
-            <div className="justify-end mt-4">
-              <PdfDownloadButton targetRef={cvRef} />
+          <div className="justify-end ">
+              <button onClick={updateResume}>
+              <PdfDownloadButton targetRef={cvRef}
+               data={formData}
+               selectedTemplate={selectedTemplate}
+               selectedFont={selectedFont}
+               textSize={textSize}
+               sectionSpacing={sectionSpacing}
+               paragraphSpacing={paragraphSpacing}
+               lineSpacing={lineSpacing}
+               boxBgColor={boxBgColor}
+               isPreviewScreen={isPreviewScreen}
+               predefinedText={predefinedText}
+               token={token}
+               skillsfromapi={skillsfromapi} /></button>
             </div>
             <div className='mt-4'>
               <button

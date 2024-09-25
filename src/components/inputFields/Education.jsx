@@ -27,7 +27,7 @@ and Awards, Degrees, Certifications, Trainings, Recognitions, Awards and Accolad
           required
           value={edu.schoolname || schoolname}
               onChange={(e) => handleInputChange(e, index, 'educations')} 
-          placeholder="e.g. Delhi University" 
+          placeholder="e.g. USA University" 
           className="w-full p-3 mb-4 border border-black rounded-lg"
         />
         
@@ -43,7 +43,7 @@ and Awards, Degrees, Certifications, Trainings, Recognitions, Awards and Accolad
           name="schoolplace" 
           value={edu.schoolplace || schoolplace}
               onChange={(e) => handleInputChange(e, index, 'educations')}
-          placeholder="e.g. Delhi, India" 
+          placeholder="e.g. USA, India" 
           className="w-full p-3 mb-4 border border-black rounded-lg"
         />
         
