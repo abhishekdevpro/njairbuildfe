@@ -7,7 +7,13 @@ function Summary({ summary = [], handleInputChange, summaryname ,token}) {
   const [apiResult, setApiResult] = useState('');
 
   const handleGetResults = async () => {
+
+    
     try {
+      if (!token) {
+        // Redirect to login page if token is missing
+        window.location.href = "https://novajobs.us/user"; 
+        return; }
       const cleanedToken = token.replace(/"/g, '').trim(); 
       console.log('Cleaned Authorization Header:', cleanedToken); 
 

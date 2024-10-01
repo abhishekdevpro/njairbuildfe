@@ -17,6 +17,12 @@ const Skills = ({ skills, handleInputChange, addSkill, deleteSkill, skillsfromap
   }, [skillsfromapi]);
 
   const fetchSuggestions = async (query) => {
+
+    if (!token) {
+      // Redirect to login page if token is missing
+      window.location.href = "https://novajobs.us/user"; 
+      return; }
+      
     const cleanedToken = token.replace(/"/g, '').trim(); 
     console.log('Cleaned Authorization Header:', cleanedToken); 
     try {
